@@ -5,7 +5,7 @@
     <div class="row">
         <div class="col-12">
             <h1>Tutti i post</h1>
-            <h2>Ciao {{ $nome ?? '' }}</h2>
+            <h2>Ciao</h2>
             <ul>
                 @foreach ($posts as $post)
                 <li>
