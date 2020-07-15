@@ -95,9 +95,11 @@ class PostController extends Controller
         $post = Post::find($id);
         if ($post) {
             $categories = Category::all();
+            $tags = Tag::all();
             $data = [
                 'post' => $post,
-                'categories' => $categories
+                'categories' => $categories,
+                'tags' => $tags
             ];
             return view('admin.posts.edit', $data);
         } else {
@@ -132,6 +134,15 @@ class PostController extends Controller
         $dati['slug'] = $slug;
         $post = Post::find($id);
         $post->update($dati);
+
+        // se l'utente ha selezionato dei tag li associo al post
+        if (!empty($dati['tags'])) {
+            $post->tags()->sync($dati['tags']);
+        } else {
+            // l'utente non ha selezionato nessun tag => faccio detach dei tag
+            $post->tags()->sync([]);
+        }
+
         return redirect()->route('admin.posts.index');
     }
 
