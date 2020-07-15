@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Post;
 use App\Category;
+use App\Tag;
 use Illuminate\Support\Str;
 
 class PostController extends Controller
@@ -28,8 +29,9 @@ class PostController extends Controller
      */
     public function create()
     {
+        $tags = Tag::all();
         $categories = Category::all();
-        return view('admin.posts.create', compact('categories'));
+        return view('admin.posts.create', compact('categories', 'tags'));
     }
 
     /**
@@ -58,6 +60,11 @@ class PostController extends Controller
         $nuovo_post = new Post();
         $nuovo_post->fill($dati);
         $nuovo_post->save();
+        //tabella pivot
+        if (!empty($dati['tags'])) {
+            $nuovo_post->tags()->sync($dati['tags']);
+        }
+
         return redirect()->route('admin.posts.index');
     }
 

@@ -26,6 +26,17 @@
                 @endforeach
             </select>
         </div>
+
+        @foreach ($tags as $tag)
+        <div class="form-check">
+            <label class="form-check-label" for="">
+                <input class="form-check-input form-check-inline" type="checkbox" name="tags[]" value="{{$tag->id}}">
+                {{ $tag->name }}
+            </label>
+        </div>
+        @endforeach
+
+
         <button type="submit" class="btn btn-primary">Salva</button>
     </form>
 

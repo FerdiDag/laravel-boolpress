@@ -4,32 +4,18 @@
 <div class="container">
     <div class="row">
         <div class="col-12">
-            <div class="col-12">
-
-                <h1>Dettagli posts</h1>
-
-                <p>
-                    <strong>Titolo:</strong>
-                    {{ $post->title }}
-                </p>
-                <p>
-                    <strong>Contenuto:</strong>
-                    {{ $post->content }}
-                </p>
-
-                <p>
-                    <strong>Categoria: </strong>
-                    {{$post->category->name ?? '' }}
-                </p>
-                <p>
-                    <strong>Creato il: </strong>
-                    {{ $post->created_at }}
-                </p>
-                <p>
-                    <strong>Aggiornato il: </strong>
-                    {{ $post->updated_at }}
-                </p>
-            </div>
+            <h1>{{ $post->title }}</h1>
+            <p>{{ $post->content }}</p>
+            <p>Categoria:{{ $post->category->name }}
+            </p>
+            <p>Tags:
+                @forelse ($post->tags as $tag)
+                {{ $tag->name }}{{ $loop->last ? '' : ', '}}
+                @empty
+                -
+                @endforelse
+            </p>
         </div>
     </div>
-    @endsection
+</div>
+@endsection
