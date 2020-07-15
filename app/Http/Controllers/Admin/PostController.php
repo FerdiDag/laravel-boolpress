@@ -156,6 +156,7 @@ class PostController extends Controller
     {
         $post = Post::find($id);
         if ($post) {
+            $post->tags()->detach();
             $post->delete();
             return redirect()->route('admin.posts.index');
         } else {
